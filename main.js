@@ -97,7 +97,30 @@ function filterProducts(category) {
         const filteredProducts = products.filter(product => product.category === category);
         displayProducts(filteredProducts);
     }
-}
+}// Add event listeners for navigation buttons
+document.querySelectorAll('.nav-btn').forEach(button => {
+    button.addEventListener('click', (e) => {
+        const section = e.target.dataset.section;
+        if (section === 'products') {
+            // Get the products section and navbar height
+            const productsSection = document.getElementById('products-grid');
+            const navbar = document.querySelector('.navbar');
+            const navbarHeight = navbar.offsetHeight;
+
+            // Scroll to products section with offset for navbar
+            window.scrollTo({
+                top: productsSection.offsetTop - navbarHeight,
+                behavior: 'smooth'
+            });
+            
+            // Update active button state
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            e.target.classList.add('active');
+        }
+    });
+});
 
 // Initialize
 displayProducts();
